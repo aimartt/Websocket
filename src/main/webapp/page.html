@@ -10,7 +10,7 @@
 			function connect() {
 				var id = document.getElementById("id").value;
 				var withUserId = document.getElementById("withUserId").value;
-				 ws = new WebSocket("ws://11.11.50.19:8082/websocket/websocketChat?withUserId=" + withUserId + "&id=" + id);	
+				 ws = new WebSocket("ws://localhost:8082/websocket/websocketChat?withUserId=" + withUserId + "&id=" + id);	
 				 ws.onopen = function() {};
 				 ws.onmessage = function(message) {
 					document.getElementById("chatlog").textContent += message.data + "\n";
