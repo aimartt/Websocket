@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=UTF-8>
+		<title>Tomcat WebSocket Chat</title>
+		<script>
+			var ws;
+			
+			/** 连接服务器 */
+			function connect() {
+				var id = document.getElementById("id").value;
+				var withUserId = document.getElementById("withUserId").value;
+				 ws = new WebSocket("ws://11.11.50.19:8082/websocket/websocketChat?withUserId=" + withUserId + "&id=" + id);	
+				 ws.onopen = function() {};
+				 ws.onmessage = function(message) {
+					document.getElementById("chatlog").textContent += message.data + "\n";
+				};
+				//连接后禁止再次连接
+				document.getElementById("id").disabled = "disabled";
+				document.getElementById("withUserId").disabled = "disabled";
+				document.getElementById("connBtn").disabled = "disabled";
+			}
+			
+			/** 发送消息 */
+			function postToServer() {
+				if (ws) {
+					ws.send(document.getElementById("msg").value);
+					document.getElementById("msg").value = "";
+				}
+			}
+			
+			/** 关闭连接 */
+			function closeConnect() {
+				if (ws) {
+					ws.close();
+					//连接关闭后启用连接按钮
+					document.getElementById("id").disabled = "";
+					document.getElementById("withUserId").disabled = "";
+					document.getElementById("connBtn").disabled = "";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<select id="id">
+			<option value="1">张老师</option>
+			<option value="2">梅西</option>
+			<option value="3">西罗</option>
+		</select>
+		<select id="withUserId">
+			<option value="1">张老师</option>
+			<option value="2">梅西</option>
+			<option value="3">西罗</option>
+		</select>
+		<button type="button" id="connBtn" onclick="connect()">Connect</button>
+		<textarea id="chatlog" readonly="readonly" rows="15" cols="50"></textarea><br />
+		<input id="msg" type="text" />
+		<button type="submit" id="sendButton" onClick="postToServer()">Send!</button>
+		<button type="submit" id="sendButton" onClick="closeConnect()">End</button>
+	</body>
+</html>
