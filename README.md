@@ -3,6 +3,6 @@ Websocket
 
 Simple websocket chat demo
 
-Run:<br />
-Goals:  tomcat7:run<br />
+Run:
+Goals:  tomcat7:run
 JRE:  jre7
